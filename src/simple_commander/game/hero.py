@@ -2,11 +2,11 @@
 import asyncio
 import logging
 import math
-
 from datetime import datetime
+
 from random import randint
 
-from simple_commander.game.unit import Unit
+from gamepad.unit import Unit
 from simple_commander.utils.constants import UNITS
 
 

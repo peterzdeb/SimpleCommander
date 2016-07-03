@@ -2,9 +2,8 @@
 
 import asyncio
 import logging
-import time
 
-from simple_commander.game.unit import Unit
+from gamepad.unit import Unit
 from simple_commander.utils.constants import DEFAULT_SPEED_BULLETS
 
 
