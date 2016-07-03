@@ -15,7 +15,8 @@ from gamepad.game_factory import get_game
 class WebGamepadServer(object):
     _instance = None
 
-    def __init__(self,  host=None, port=None, templates=None, notify_callback=print,
+    def __init__(self,  host=None, port=None,
+                 templates='templates', static_path='static', notify_callback=print,
                  **kwargs):
         logging.info('Init Server on host %s:%s' % (host, port))
         self._loop = asyncio.get_event_loop()
@@ -91,7 +92,7 @@ if __name__ == '__main__':
     static_path = config.get('commandServer', 'static_path')
     templates = config.get('commandServer', 'templates')
     loop = asyncio.get_event_loop()
-    server = WebGamepadServer(host=host, port=port, templates=templates)
+    server = WebGamepadServer(host=host, port=port, templates=templates, static_path=static_path)
     try:
         server.start()
         loop.run_forever()
