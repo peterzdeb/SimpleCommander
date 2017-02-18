@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Visit Page{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <form id="formStartGame" class="visit" method="GET" action="/run">
+        <input type="text" name="name" id="heroName" required/>
+        <button type="submit" >Set name and start</button>
+    </form>
+{% endblock %}
