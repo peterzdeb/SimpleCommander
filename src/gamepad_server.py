@@ -21,6 +21,7 @@ class WebGamepadServer(object):
         logging.info('Init Server on host %s:%s' % (host, port))
         self._loop = asyncio.get_event_loop()
         self._app = web.Application(loop=self._loop)
+        self.static_path = static_path
 
         self._load_routes()
         self._load_static()
@@ -51,7 +52,7 @@ class WebGamepadServer(object):
         self._app.router.add_route('GET', '/ws_stream', self.ws_stream)
 
     def _load_static(self):
-        self._app.router.add_static('/static', static_path)
+        self._app.router.add_static('/static', self.static_path)
 
     @asyncio.coroutine
     def ws_stream(self, request, *args, **kwargs):
