@@ -5,6 +5,9 @@ import logging
 from web_gamepad.gamepad.unit import Unit
 
 
+logger = logging.getLogger(__name__)
+
+
 class GamepadController(object):
     _instance = None
     launched = False
@@ -29,7 +32,7 @@ class GamepadController(object):
         unit = unit_class(*args, **kwargs)
         self.units[unit.id] = unit
         unit.response('new')
-        logging.debug('Create new unit - %s -', unit.__class__.__name__)
+        logger.debug('Create new unit - %s -', unit.__class__.__name__)
         return unit
 
     def drop_connection(self, socket):
