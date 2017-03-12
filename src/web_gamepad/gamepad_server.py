@@ -12,13 +12,16 @@ from web_gamepad.core import views
 from web_gamepad.gamepad.game_factory import get_game
 
 
+logger = logging.getLogger(__name__)
+
+
 class WebGamepadServer(object):
     _instance = None
 
     def __init__(self,  host=None, port=None,
                  templates=None, static_path=None, notify_callback=print,
                  **kwargs):
-        logging.info('Init Server on host %s:%s' % (host, port))
+        logger.info('Init Server on host %s:%s' % (host, port))
         self._loop = asyncio.get_event_loop()
         self._app = web.Application(loop=self._loop)
         if not static_path:
@@ -47,11 +50,11 @@ class WebGamepadServer(object):
 
     def start(self):
         self._server = self._loop.run_until_complete(self._server)
-        logging.info('Server has started.')
+        logger.info('Server has started.')
 
     def stop(self):
         self._server.close()
-        logging.info('Server has stopped.')
+        logger.info('Server has stopped.')
 
     def _load_routes(self):
         self._app.router.add_route('GET', '/ws_stream', self.ws_stream)
@@ -76,10 +79,10 @@ class WebGamepadServer(object):
                     else:
                         yield from self._controller.do_action(**data)
             elif msg.tp == MsgType.close:
-                logging.info('websocket connection closed')
+                logger.info('websocket connection closed')
                 self._controller.drop_connection(ws)
             elif msg.tp == MsgType.error:
-                logging.info('ws connection closed with exception %s', 
+                logger.info('ws connection closed with exception %s',
                     ws.exception())
                 self._controller.drop_connection(ws)
 
@@ -88,11 +91,11 @@ class WebGamepadServer(object):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    log = logging.getLogger('WebGamepad')
+
     config = configparser.ConfigParser()
     config_file = os.path.join(os.getcwd(),
                                'etc', 'command_server.conf')
-    log.info('Using Configuration file: %s' % config_file)
+    logger.info('Using Configuration file: %s' % config_file)
     config.read(config_file)
     host = config.get('commandServer', 'host')
     port = os.environ.get('PORT', config.get('commandServer', 'port'))

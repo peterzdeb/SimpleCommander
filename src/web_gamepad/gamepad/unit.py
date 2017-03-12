@@ -6,6 +6,9 @@ import uuid
 from datetime import datetime
 
 
+logger = logging.getLogger(__name__)
+
+
 class Unit(object):
     """ Base class for all the units. """
 
@@ -30,5 +33,5 @@ class Unit(object):
         raise NotImplementedError
 
     def kill(self):
-        logging.debug('Killing - %s ' % self.__class__.__name__)
+        logger.debug('Killing - %s ' % self.__class__.__name__)
         self.is_dead = True
